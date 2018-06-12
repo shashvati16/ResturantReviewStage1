@@ -57,7 +57,14 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
 
   const image = document.getElementById('restaurant-img');
   image.className = 'restaurant-img'
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  const imageurlbase = DBHelper.imageUrlForRestaurant(restaurant,'img');
+  const imgparts = imageurlbase.split('.');
+  const imgurl1x = imgparts[0] + '_1X.' + imgparts[1];
+  const imgurl2x = imgparts[0] + '_2X.' + imgparts[1];
+  image.src = imgurl2x;
+  image.srcset = `${imgurl1x} 300w, ${imgurl2x} 600w`;
+  image.alt = restaurant.name + ' restaurant promotional image';
+  
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
@@ -95,7 +102,7 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
  */
 fillReviewsHTML = (reviews = self.restaurant.reviews) => {
   const container = document.getElementById('reviews-container');
-  const title = document.createElement('h2');
+  const title = document.createElement('h3');
   title.innerHTML = 'Reviews';
   container.appendChild(title);
 
@@ -142,7 +149,11 @@ createReviewHTML = (review) => {
 fillBreadcrumb = (restaurant=self.restaurant) => {
   const breadcrumb = document.getElementById('breadcrumb');
   const li = document.createElement('li');
+  const a = document.createElement('a');
+  a.href = window.location;
   li.innerHTML = restaurant.name;
+  a.setAttribute('aria-current','page');
+  li.appendChild(a);
   breadcrumb.appendChild(li);
 }
 
