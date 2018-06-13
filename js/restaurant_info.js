@@ -139,7 +139,7 @@ createReviewHTML = (review) => {
   const comments = document.createElement('p');
   comments.innerHTML = review.comments;
   li.appendChild(comments);
-
+  li.tabIndex = 1;
   return li;
 }
 
